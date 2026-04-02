@@ -17,8 +17,6 @@ open class STAboutListViewController: UIViewController {
         tableView.backgroundColor = STAboutColors.background
         tableView.separatorStyle = .singleLine
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 62, bottom: 0, right: 0)
-        tableView.dataSource = self
-        tableView.delegate = self
         tableView.register(STAboutListCell.self, forCellReuseIdentifier: STAboutListCell.stIdentifier)
         tableView.register(STAboutListHeaderView.self, forHeaderFooterViewReuseIdentifier: STAboutListHeaderView.stIdentifier)
         tableView.keyboardDismissMode = .onDrag
@@ -53,8 +51,18 @@ open class STAboutListViewController: UIViewController {
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         self.buildSections()
         self.tableView.reloadData()
+    }
+
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tableView.delegate = nil
+        self.tableView.dataSource = nil
     }
 
     // MARK: - Setup Methods
@@ -64,7 +72,6 @@ open class STAboutListViewController: UIViewController {
         self.navigationItem.title = self.configuration.sceneTitle
 
         self.view.addSubview(self.tableView)
-        self.hidesBottomBarWhenPushed = true
         self.tableView.snp.makeConstraints { make in
             make.edges.equalTo(self.view.safeAreaLayoutGuide)
         }

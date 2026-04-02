@@ -8,9 +8,14 @@ import UIKit
 
 // MARK: - License Model
 
-struct STLicenseItem {
-    let name: String
-    let licenseText: String
+public struct STLicenseItem {
+    public let name: String
+    public let licenseText: String
+
+    public init(name: String, licenseText: String) {
+        self.name = name
+        self.licenseText = licenseText
+    }
 }
 
 // MARK: - Open Source List VC
@@ -57,64 +62,50 @@ final class STOpenSourceListViewController: UIViewController {
     // MARK: - License Loading
 
     private func loadLicenses() {
+        // Bundle.allFrameworks에서 SPM 패키지 이름 추출
         var items: [STLicenseItem] = []
+        let excludePrefixes = ["com.apple.", "libswift", "UIKit", "Foundation", "CoreFoundation"]
 
-        // SPM 체크아웃 디렉토리에서 LICENSE 파일 검색
-        let checkoutPaths = Self.findSPMCheckoutPaths()
+        for bundle in Bundle.allFrameworks {
+            guard let bundleId = bundle.bundleIdentifier else { continue }
 
-        for path in checkoutPaths {
-            let packageName = (path as NSString).lastPathComponent
-            let licensePath = Self.findLicenseFile(in: path)
+            // 시스템 프레임워크 제외
+            let isSystem = excludePrefixes.contains(where: { bundleId.hasPrefix($0) })
+            if isSystem { continue }
 
-            if let licensePath = licensePath,
-               let text = try? String(contentsOfFile: licensePath, encoding: .utf8) {
-                items.append(STLicenseItem(name: packageName, licenseText: text))
-            }
-            else {
-                items.append(STLicenseItem(name: packageName, licenseText: "License file not found."))
+            // 번들 경로에서 패키지명 추출
+            let path = bundle.bundlePath
+            let name = (path as NSString).lastPathComponent
+                .replacingOccurrences(of: ".framework", with: "")
+                .replacingOccurrences(of: ".bundle", with: "")
+
+            // LICENSE 파일 검색
+            let licenseText = Self.findLicenseInBundle(bundle) ?? "This package is used under its original license terms."
+
+            if !name.isEmpty {
+                items.append(STLicenseItem(name: name, licenseText: licenseText))
             }
         }
 
-        self.licenses = items.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
+        // 중복 제거 + 정렬
+        var seen = Set<String>()
+        self.licenses = items
+            .filter { seen.insert($0.name).inserted }
+            .sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
         self.tableView.reloadData()
     }
 
-    // MARK: - SPM Path Discovery
-
-    private static func findSPMCheckoutPaths() -> [String] {
-        var paths: [String] = []
-
-        // DerivedData 기반 SPM checkouts
-        let homeDir = NSHomeDirectory()
-        let derivedDataBase = "\(homeDir)/Library/Developer/Xcode/DerivedData"
-
-        if let derivedDataContents = try? FileManager.default.contentsOfDirectory(atPath: derivedDataBase) {
-            for dir in derivedDataContents {
-                let checkoutsPath = "\(derivedDataBase)/\(dir)/SourcePackages/checkouts"
-                if FileManager.default.fileExists(atPath: checkoutsPath) {
-                    if let packages = try? FileManager.default.contentsOfDirectory(atPath: checkoutsPath) {
-                        for pkg in packages {
-                            let fullPath = "\(checkoutsPath)/\(pkg)"
-                            var isDir: ObjCBool = false
-                            if FileManager.default.fileExists(atPath: fullPath, isDirectory: &isDir), isDir.boolValue {
-                                paths.append(fullPath)
-                            }
-                        }
-                    }
-                    break
-                }
-            }
-        }
-
-        return paths
-    }
-
-    private static func findLicenseFile(in directory: String) -> String? {
-        let candidates = ["LICENSE", "LICENSE.md", "LICENSE.txt", "LICENCE", "LICENCE.md", "License", "license"]
+    private static func findLicenseInBundle(_ bundle: Bundle) -> String? {
+        let candidates = ["LICENSE", "LICENSE.md", "LICENSE.txt", "LICENCE", "License"]
         for candidate in candidates {
-            let path = "\(directory)/\(candidate)"
-            if FileManager.default.fileExists(atPath: path) {
-                return path
+            if let url = bundle.url(forResource: candidate, withExtension: nil) {
+                return try? String(contentsOf: url, encoding: .utf8)
+            }
+            // 확장자 분리
+            let name = (candidate as NSString).deletingPathExtension
+            let ext = (candidate as NSString).pathExtension
+            if !ext.isEmpty, let url = bundle.url(forResource: name, withExtension: ext) {
+                return try? String(contentsOf: url, encoding: .utf8)
             }
         }
         return nil
