@@ -1,5 +1,6 @@
 // MARK: - Common
 "stabout_common_cancel" = "Cancel";
+"stabout_scene_title" = "Settings";
 
 // MARK: - Sections
 "stabout_section_help" = "Help";

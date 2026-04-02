@@ -98,7 +98,7 @@ public struct STAboutConfiguration {
         appStoreWebURL: String,
         kakaoOpenChatURL: String? = nil,
         shareMessage: String,
-        sceneTitle: String,
+        sceneTitle: String? = nil,
         inquiryConfig: InquiryConfiguration? = nil
     ) {
         self.appName = appName
@@ -108,7 +108,7 @@ public struct STAboutConfiguration {
         self.appStoreWebURL = appStoreWebURL
         self.kakaoOpenChatURL = kakaoOpenChatURL
         self.shareMessage = shareMessage
-        self.sceneTitle = sceneTitle
+        self.sceneTitle = sceneTitle ?? I18N.scene_title
         self.inquiryConfig = inquiryConfig
     }
 }

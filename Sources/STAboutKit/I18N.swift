@@ -10,6 +10,7 @@ struct I18N {
     // MARK: - Common
 
     static let common_cancel = "stabout_common_cancel".localized
+    static let scene_title = "stabout_scene_title".localized
 
     // MARK: - Sections
 

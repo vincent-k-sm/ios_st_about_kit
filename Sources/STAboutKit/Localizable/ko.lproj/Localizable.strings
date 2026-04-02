@@ -1,5 +1,6 @@
 // MARK: - Common
 "stabout_common_cancel" = "취소";
+"stabout_scene_title" = "설정";
 
 // MARK: - Sections
 "stabout_section_help" = "도움말";
