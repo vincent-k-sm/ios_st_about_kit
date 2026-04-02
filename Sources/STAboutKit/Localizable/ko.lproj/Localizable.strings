@@ -19,3 +19,58 @@
 "stabout_contact_action_title" = "문의 방법 선택";
 "stabout_contact_inquiry" = "1:1 문의";
 "stabout_contact_kakao" = "카카오톡 오픈채팅";
+
+// MARK: - Common (Inquiry)
+"stabout_common_confirm" = "확인";
+"stabout_common_save" = "저장";
+"stabout_common_add" = "추가";
+"stabout_common_unknown" = "알 수 없음";
+"stabout_common_alert" = "알림";
+
+// MARK: - Inquiry
+"stabout_inquiry_nav_title" = "문의하기";
+"stabout_inquiry_email_label" = "이메일";
+"stabout_inquiry_email_placeholder" = "답변 받으실 이메일";
+"stabout_inquiry_title_label" = "제목";
+"stabout_inquiry_title_placeholder" = "문의 제목을 입력하세요";
+"stabout_inquiry_content_label" = "내용";
+"stabout_inquiry_content_placeholder" = "문의 내용을 입력하세요";
+"stabout_inquiry_attachment_label" = "첨부 파일";
+"stabout_inquiry_submit" = "문의 보내기";
+"stabout_inquiry_history_label" = "이전 문의 내역";
+"stabout_inquiry_no_history" = "이전 문의 내역이 없습니다";
+"stabout_inquiry_all_loaded" = "모든 문의 내역을 불러왔습니다";
+"stabout_inquiry_input_error" = "입력 오류";
+"stabout_inquiry_input_error_message" = "입력 내용을 확인해주세요";
+"stabout_inquiry_success" = "문의 완료";
+"stabout_inquiry_success_message" = "문의가 접수되었습니다.\n빠른 시일 내에 답변 드리겠습니다.";
+"stabout_inquiry_failed" = "문의 실패";
+"stabout_inquiry_failed_message" = "문의 접수에 실패했습니다.\n잠시 후 다시 시도해주세요.";
+
+// MARK: - Inquiry Validation
+"stabout_inquiry_error_email" = "이메일을 입력해주세요";
+"stabout_inquiry_error_title" = "제목을 입력해주세요";
+"stabout_inquiry_error_content" = "내용을 입력해주세요";
+"stabout_inquiry_error_email_format" = "올바른 이메일 형식을 입력해주세요";
+"stabout_inquiry_error_title_length" = "제목은 200자 이내로 입력해주세요";
+"stabout_inquiry_error_content_length" = "내용은 5000자 이내로 입력해주세요";
+"stabout_inquiry_error_network" = "네트워크 연결이 불안정합니다.\n다시 시도해주세요";
+"stabout_inquiry_error_url" = "서버 연결에 실패했습니다";
+
+// MARK: - Inquiry List
+"stabout_inquiry_list_title" = "문의 내역";
+"stabout_inquiry_list_empty" = "문의 내역이 없습니다";
+"stabout_inquiry_list_first" = "문의하기";
+"stabout_inquiry_status_pending" = "대기중";
+"stabout_inquiry_status_replied" = "답변완료";
+
+// MARK: - Inquiry Select
+"stabout_inquiry_select_title" = "이전 문의 선택";
+"stabout_inquiry_select_done" = "첨부하기";
+"stabout_inquiry_select_done_count" = "%d개 첨부하기";
+
+// MARK: - Inquiry Thread
+"stabout_inquiry_thread_title" = "문의 상세";
+"stabout_inquiry_thread_me" = "나";
+"stabout_inquiry_thread_waiting" = "답변 대기중입니다";
+"stabout_inquiry_thread_refresh" = "아래로 당겨서 새로고침";

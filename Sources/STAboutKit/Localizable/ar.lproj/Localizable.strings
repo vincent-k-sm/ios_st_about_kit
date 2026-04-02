@@ -19,3 +19,58 @@
 "stabout_contact_action_title" = "Contact Method";
 "stabout_contact_inquiry" = "Direct Inquiry";
 "stabout_contact_kakao" = "KakaoTalk Open Chat";
+
+// MARK: - Common (Inquiry)
+"stabout_common_confirm" = "OK";
+"stabout_common_save" = "Save";
+"stabout_common_add" = "Add";
+"stabout_common_unknown" = "Unknown";
+"stabout_common_alert" = "Alert";
+
+// MARK: - Inquiry
+"stabout_inquiry_nav_title" = "Contact Us";
+"stabout_inquiry_email_label" = "Email";
+"stabout_inquiry_email_placeholder" = "Email for reply";
+"stabout_inquiry_title_label" = "Subject";
+"stabout_inquiry_title_placeholder" = "Enter subject";
+"stabout_inquiry_content_label" = "Message";
+"stabout_inquiry_content_placeholder" = "Enter your message";
+"stabout_inquiry_attachment_label" = "Attachments";
+"stabout_inquiry_submit" = "Submit";
+"stabout_inquiry_history_label" = "Previous Inquiries";
+"stabout_inquiry_no_history" = "No previous inquiries";
+"stabout_inquiry_all_loaded" = "All inquiries loaded";
+"stabout_inquiry_input_error" = "Input Error";
+"stabout_inquiry_input_error_message" = "Please check your input";
+"stabout_inquiry_success" = "Submitted";
+"stabout_inquiry_success_message" = "Your inquiry has been submitted.\nWe will respond as soon as possible.";
+"stabout_inquiry_failed" = "Failed";
+"stabout_inquiry_failed_message" = "Failed to submit inquiry.\nPlease try again later.";
+
+// MARK: - Inquiry Validation
+"stabout_inquiry_error_email" = "Please enter your email";
+"stabout_inquiry_error_title" = "Please enter a subject";
+"stabout_inquiry_error_content" = "Please enter a message";
+"stabout_inquiry_error_email_format" = "Please enter a valid email address";
+"stabout_inquiry_error_title_length" = "Subject must be 200 characters or less";
+"stabout_inquiry_error_content_length" = "Message must be 5000 characters or less";
+"stabout_inquiry_error_network" = "Network connection is unstable.\nPlease try again";
+"stabout_inquiry_error_url" = "Failed to connect to server";
+
+// MARK: - Inquiry List
+"stabout_inquiry_list_title" = "Inquiry History";
+"stabout_inquiry_list_empty" = "No inquiries yet";
+"stabout_inquiry_list_first" = "Contact Us";
+"stabout_inquiry_status_pending" = "Pending";
+"stabout_inquiry_status_replied" = "Replied";
+
+// MARK: - Inquiry Select
+"stabout_inquiry_select_title" = "Select Previous Inquiry";
+"stabout_inquiry_select_done" = "Attach";
+"stabout_inquiry_select_done_count" = "Attach %d";
+
+// MARK: - Inquiry Thread
+"stabout_inquiry_thread_title" = "Inquiry Detail";
+"stabout_inquiry_thread_me" = "Me";
+"stabout_inquiry_thread_waiting" = "Waiting for reply";
+"stabout_inquiry_thread_refresh" = "Pull to refresh";

@@ -33,6 +33,10 @@ public struct STAboutConfiguration {
 
     public let sceneTitle: String
 
+    // MARK: - Inquiry
+
+    public let inquiryConfig: InquiryConfiguration?
+
     // MARK: - Computed
 
     public var fullVersion: String {
@@ -41,6 +45,30 @@ public struct STAboutConfiguration {
 
     public var reviewURL: String {
         return "https://apps.apple.com/app/id\(self.appId)?action=write-review"
+    }
+
+    // MARK: - Inquiry Configuration
+
+    public struct InquiryConfiguration {
+        public let apiURL: String
+        public let spreadsheetId: String
+        public let slackWebhookUrl: String
+        public let deviceIdProvider: () -> String
+        public let environmentInfoProvider: () -> String
+
+        public init(
+            apiURL: String,
+            spreadsheetId: String,
+            slackWebhookUrl: String,
+            deviceIdProvider: @escaping () -> String,
+            environmentInfoProvider: @escaping () -> String
+        ) {
+            self.apiURL = apiURL
+            self.spreadsheetId = spreadsheetId
+            self.slackWebhookUrl = slackWebhookUrl
+            self.deviceIdProvider = deviceIdProvider
+            self.environmentInfoProvider = environmentInfoProvider
+        }
     }
 
     // MARK: - Initialization
@@ -56,7 +84,8 @@ public struct STAboutConfiguration {
         appStoreWebURL: String,
         kakaoOpenChatURL: String? = nil,
         shareMessage: String,
-        sceneTitle: String
+        sceneTitle: String,
+        inquiryConfig: InquiryConfiguration? = nil
     ) {
         self.appName = appName
         self.appId = appId
@@ -69,5 +98,6 @@ public struct STAboutConfiguration {
         self.kakaoOpenChatURL = kakaoOpenChatURL
         self.shareMessage = shareMessage
         self.sceneTitle = sceneTitle
+        self.inquiryConfig = inquiryConfig
     }
 }
