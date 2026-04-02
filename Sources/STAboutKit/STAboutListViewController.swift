@@ -140,8 +140,13 @@ open class STAboutListViewController: UIViewController {
         infoItems.append(STAboutItem(
             title: I18N.menu_version,
             iconName: "info.circle",
-            accessory: .label(self.configuration.fullVersion),
-            action: {}
+            accessory: .label(self.configuration.appVersion),
+            action: { [weak self] in
+                guard let self = self else { return }
+                let urlString = "https://apps.apple.com/app/id\(self.configuration.appId)"
+                guard let url = URL(string: urlString) else { return }
+                UIApplication.shared.open(url)
+            }
         ))
 
         sections.append(infoItems)

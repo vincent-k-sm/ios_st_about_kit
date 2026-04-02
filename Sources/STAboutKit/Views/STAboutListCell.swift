@@ -137,9 +137,5 @@ final class STAboutListCell: UITableViewCell {
         }
 
         self.arrowImageView.isHidden = !showArrow
-
-        if !showArrow && statusText != nil {
-            self.selectionStyle = .none
-        }
     }
 }
