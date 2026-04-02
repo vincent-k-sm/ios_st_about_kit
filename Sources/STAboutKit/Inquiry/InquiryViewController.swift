@@ -113,24 +113,24 @@ public final class InquiryViewController: UIViewController {
         return label
     }()
 
-    private lazy var environmentInfoView: UIView = {
-        let view = UIView()
-        view.backgroundColor = STAboutColors.inputBackground
-        view.layer.cornerRadius = 8
-
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = STAboutTypography.caption2
-        label.textColor = STAboutColors.textTertiary
-        label.text = Self.environmentInfoText()
-
-        view.addSubview(label)
-        label.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(12)
-        }
-
-        return view
-    }()
+//    private lazy var environmentInfoView: UIView = {
+//        let view = UIView()
+//        view.backgroundColor = STAboutColors.inputBackground
+//        view.layer.cornerRadius = 8
+//
+//        let label = UILabel()
+//        label.numberOfLines = 0
+//        label.font = STAboutTypography.caption2
+//        label.textColor = STAboutColors.textTertiary
+//        label.text = Self.environmentInfoText()
+//
+//        view.addSubview(label)
+//        label.snp.makeConstraints { make in
+//            make.edges.equalToSuperview().inset(12)
+//        }
+//
+//        return view
+//    }()
 
     private lazy var attachmentLabel: UILabel = {
         let label = UILabel()
@@ -316,7 +316,7 @@ public final class InquiryViewController: UIViewController {
         self.contentView.addSubview(self.messageLabel)
         self.contentView.addSubview(self.messageTextView)
         self.messageTextView.addSubview(self.placeholderLabel)
-        self.contentView.addSubview(self.environmentInfoView)
+//        self.contentView.addSubview(self.environmentInfoView)
         self.contentView.addSubview(self.attachmentLabel)
         self.contentView.addSubview(self.attachmentStackView)
         self.contentView.addSubview(self.submitButton)
@@ -371,15 +371,15 @@ public final class InquiryViewController: UIViewController {
             make.leading.equalToSuperview().offset(13)
         }
 
-        self.environmentInfoView.snp.makeConstraints { make in
-            make.top.equalTo(self.messageTextView.snp.bottom).offset(STAboutSpacing.sm)
-            make.leading.trailing.equalToSuperview().inset(STAboutSpacing.lg)
-        }
-
-        self.attachmentLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.environmentInfoView.snp.bottom).offset(STAboutSpacing.lg)
-            make.leading.trailing.equalToSuperview().inset(STAboutSpacing.lg)
-        }
+//        self.environmentInfoView.snp.makeConstraints { make in
+//            make.top.equalTo(self.messageTextView.snp.bottom).offset(STAboutSpacing.sm)
+//            make.leading.trailing.equalToSuperview().inset(STAboutSpacing.lg)
+//        }
+//
+//        self.attachmentLabel.snp.makeConstraints { make in
+//            make.top.equalTo(self.environmentInfoView.snp.bottom).offset(STAboutSpacing.lg)
+//            make.leading.trailing.equalToSuperview().inset(STAboutSpacing.lg)
+//        }
 
         self.attachmentStackView.snp.makeConstraints { make in
             make.top.equalTo(self.attachmentLabel.snp.bottom).offset(STAboutSpacing.sm)
@@ -754,23 +754,9 @@ public final class InquiryViewController: UIViewController {
         }
 
         // fallback: 기본 기기 정보만
-        let device = UIDevice.current
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-"
         let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "-"
-
-        var model = device.model
-        var sysInfo = utsname()
-        uname(&sysInfo)
-        let machine = withUnsafePointer(to: &sysInfo.machine) {
-            $0.withMemoryRebound(to: CChar.self, capacity: 1) {
-                String(cString: $0)
-            }
-        }
-        if !machine.isEmpty {
-            model = machine
-        }
-
-        let info = "기기: \(model) | iOS \(device.systemVersion) | 앱 v\(appVersion) (\(buildNumber))"
+        let info = "기기: \(UIDevice.modelName) | iOS \(UIDevice.current.systemVersion) | 앱 v\(appVersion) (\(buildNumber))"
         return info
     }
 }
