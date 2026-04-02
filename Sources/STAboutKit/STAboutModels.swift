@@ -8,10 +8,12 @@ import UIKit
 // MARK: - Section Model
 
 public struct STAboutSection {
+    public var sectionIndex: Int
     public let headerTitle: String?
     public let items: [STAboutItem]
 
-    public init(headerTitle: String? = nil, items: [STAboutItem]) {
+    public init(sectionIndex: Int, headerTitle: String? = nil, items: [STAboutItem]) {
+        self.sectionIndex = sectionIndex
         self.headerTitle = headerTitle
         self.items = items
     }

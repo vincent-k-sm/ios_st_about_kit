@@ -85,17 +85,10 @@ open class STAboutListViewController: UIViewController {
     // MARK: - Section Building
 
     private func buildSections() {
-        var sections: [[STAboutItem]] = []
-        var titles: [String?] = []
+        // 기본 섹션 (index 100, 200, 300)
+        var allAboutSections: [STAboutSection] = []
 
-        // Additional 섹션 (맨 위에 배치)
-        let additional = self.additionalSections()
-        for section in additional {
-            sections.append(section.items)
-            titles.append(section.headerTitle)
-        }
-
-        // Help 섹션
+        // Help 섹션 (index 100)
         var helpItems: [STAboutItem] = []
 
         if self.configuration.faqURL != nil {
@@ -117,10 +110,9 @@ open class STAboutListViewController: UIViewController {
             }
         ))
 
-        sections.append(helpItems)
-        titles.append(I18N.section_help)
+        allAboutSections.append(STAboutSection(sectionIndex: 100, headerTitle: I18N.section_help, items: helpItems))
 
-        // Share 섹션
+        // Share 섹션 (index 200)
         var shareItems: [STAboutItem] = []
 
         shareItems.append(STAboutItem(
@@ -139,10 +131,9 @@ open class STAboutListViewController: UIViewController {
             }
         ))
 
-        sections.append(shareItems)
-        titles.append(I18N.section_share)
+        allAboutSections.append(STAboutSection(sectionIndex: 200, headerTitle: I18N.section_share, items: shareItems))
 
-        // Info 섹션
+        // Info 섹션 (index 300)
         var infoItems: [STAboutItem] = []
 
         infoItems.append(STAboutItem(
@@ -183,11 +174,16 @@ open class STAboutListViewController: UIViewController {
             }
         ))
 
-        sections.append(infoItems)
-        titles.append(I18N.section_info)
+        allAboutSections.append(STAboutSection(sectionIndex: 300, headerTitle: I18N.section_info, items: infoItems))
 
-        self.allSections = sections
-        self.sectionTitles = titles
+        // Additional 섹션 (프로젝트별)
+        allAboutSections.append(contentsOf: self.additionalSections())
+
+        // sectionIndex 기준 정렬
+        allAboutSections.sort(by: { $0.sectionIndex < $1.sectionIndex })
+
+        self.allSections = allAboutSections.map { $0.items }
+        self.sectionTitles = allAboutSections.map { $0.headerTitle }
     }
 
     // MARK: - Open Override Points
