@@ -200,6 +200,7 @@ open class STAboutListViewController: UIViewController {
     open func handleContactAction() {
         guard self.configuration.inquiryConfig != nil else { return }
         let listVC = InquiryListViewController()
+        listVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(listVC, animated: true)
     }
 
@@ -247,11 +248,13 @@ open class STAboutListViewController: UIViewController {
 
     private func showOpenSourceList() {
         let openSourceVC = STOpenSourceListViewController()
+        openSourceVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(openSourceVC, animated: true)
     }
 
     private func openURL(_ urlString: String, title: String = "") {
         let webVC = STAboutWebViewController(title: title, urlString: urlString)
+        webVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(webVC, animated: true)
     }
 
