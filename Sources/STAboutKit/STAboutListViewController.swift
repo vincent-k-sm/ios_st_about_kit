@@ -64,7 +64,7 @@ open class STAboutListViewController: UIViewController {
         self.navigationItem.title = self.configuration.sceneTitle
 
         self.view.addSubview(self.tableView)
-
+        self.hidesBottomBarWhenPushed = true
         self.tableView.snp.makeConstraints { make in
             make.edges.equalTo(self.view.safeAreaLayoutGuide)
         }
