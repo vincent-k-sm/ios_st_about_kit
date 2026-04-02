@@ -3,7 +3,6 @@
 //  STAboutKit
 //
 
-import SafariServices
 import SnapKit
 import StoreKit
 import UIKit
@@ -125,7 +124,8 @@ open class STAboutListViewController: UIViewController {
             title: I18N.menu_privacy,
             iconName: "hand.raised",
             action: { [weak self] in
-                self?.openURL(self?.configuration.privacyPolicyURL ?? "")
+                guard let self = self else { return }
+                self.openURL(self.configuration.privacyPolicyURL, title: I18N.menu_privacy)
             }
         ))
 
@@ -133,7 +133,8 @@ open class STAboutListViewController: UIViewController {
             title: I18N.menu_terms,
             iconName: "doc.text",
             action: { [weak self] in
-                self?.openURL(self?.configuration.termsOfServiceURL ?? "")
+                guard let self = self else { return }
+                self.openURL(self.configuration.termsOfServiceURL, title: I18N.menu_terms)
             }
         ))
 
@@ -216,11 +217,9 @@ open class STAboutListViewController: UIViewController {
         UIApplication.shared.open(url)
     }
 
-    private func openURL(_ urlString: String) {
-        guard let url = URL(string: urlString) else { return }
-        let safariVC = SFSafariViewController(url: url)
-        safariVC.modalPresentationStyle = .pageSheet
-        self.present(safariVC, animated: true, completion: nil)
+    private func openURL(_ urlString: String, title: String = "") {
+        let webVC = STAboutWebViewController(title: title, urlString: urlString)
+        self.navigationController?.pushViewController(webVC, animated: true)
     }
 
     /// 추가 섹션 갱신
