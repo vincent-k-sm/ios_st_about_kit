@@ -28,6 +28,8 @@ open class STAboutListViewController: UIViewController {
     public let configuration: STAboutConfiguration
     private var allSections: [[STAboutItem]] = []
     private var sectionTitles: [String?] = []
+    private var adminTapView: UIView?
+    private var adminTapCount: Int = 0
 
     // MARK: - Initialization
 
@@ -57,12 +59,15 @@ open class STAboutListViewController: UIViewController {
         self.tableView.dataSource = self
         self.buildSections()
         self.tableView.reloadData()
+        self.setupAdminTapArea()
     }
 
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tableView.delegate = nil
         self.tableView.dataSource = nil
+        self.adminTapView?.removeFromSuperview()
+        self.adminTapView = nil
     }
 
     // MARK: - Setup Methods
@@ -82,6 +87,13 @@ open class STAboutListViewController: UIViewController {
     private func buildSections() {
         var sections: [[STAboutItem]] = []
         var titles: [String?] = []
+
+        // Additional 섹션 (맨 위에 배치)
+        let additional = self.additionalSections()
+        for section in additional {
+            sections.append(section.items)
+            titles.append(section.headerTitle)
+        }
 
         // Help 섹션
         var helpItems: [STAboutItem] = []
@@ -129,13 +141,6 @@ open class STAboutListViewController: UIViewController {
 
         sections.append(shareItems)
         titles.append(I18N.section_share)
-
-        // Additional 섹션
-        let additional = self.additionalSections()
-        for section in additional {
-            sections.append(section.items)
-            titles.append(section.headerTitle)
-        }
 
         // Info 섹션
         var infoItems: [STAboutItem] = []
@@ -194,6 +199,9 @@ open class STAboutListViewController: UIViewController {
 
     /// 토스트 메시지 표시
     open func showToast(_ message: String) { }
+
+    /// Admin 코드 처리. 서브클래스에서 오버라이드하여 verify/forceFree 등 구현.
+    open func handleAdminCode(_ code: String) { }
 
     /// 문의하기 커스텀 처리. 기본: 카카오톡 옵션이 있으면 ActionSheet, 없으면 이메일.
     /// 완전히 커스텀하려면 오버라이드.
@@ -262,6 +270,52 @@ open class STAboutListViewController: UIViewController {
     public func reloadSections() {
         self.buildSections()
         self.tableView.reloadData()
+    }
+
+    // MARK: - Admin
+
+    private func setupAdminTapArea() {
+        guard self.adminTapView == nil,
+              let navBar = self.navigationController?.navigationBar
+        else { return }
+
+        let tapView = UIView()
+        tapView.backgroundColor = .clear
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.adminAreaTapped))
+        tapView.addGestureRecognizer(tapGesture)
+        navBar.addSubview(tapView)
+        tapView.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(8)
+            make.centerY.equalToSuperview()
+            make.width.height.equalTo(44)
+        }
+        self.adminTapView = tapView
+    }
+
+    @objc private func adminAreaTapped() {
+        self.adminTapCount += 1
+        if self.adminTapCount >= 5 {
+            self.adminTapCount = 0
+            self.showAdminAlert()
+        }
+    }
+
+    private func showAdminAlert() {
+        let alert = UIAlertController(
+            title: "Admin",
+            message: nil,
+            preferredStyle: .alert
+        )
+        alert.addTextField { textField in
+            textField.isSecureTextEntry = true
+        }
+        alert.addAction(UIAlertAction(title: I18N.common_cancel, style: .cancel))
+        alert.addAction(UIAlertAction(title: I18N.common_confirm, style: .default, handler: { [weak self] _ in
+            guard let self = self else { return }
+            guard let code = alert.textFields?.first?.text else { return }
+            self.handleAdminCode(code)
+        }))
+        self.present(alert, animated: true)
     }
 }
 
