@@ -77,31 +77,17 @@ open class STAboutListViewController: UIViewController {
         var sections: [[STAboutItem]] = []
         var titles: [String?] = []
 
-        // Help 섹션
-        var helpItems: [STAboutItem] = []
-
-        if self.configuration.faqURL != nil {
-            helpItems.append(STAboutItem(
-                title: I18N.menu_faq,
-                iconName: "questionmark.circle",
+        // Help 섹션 (문의하기)
+        sections.append([
+            STAboutItem(
+                title: I18N.menu_contact,
+                iconName: "envelope",
                 action: { [weak self] in
-                    self?.openURL(self?.configuration.faqURL ?? "")
+                    self?.handleContact()
                 }
-            ))
-        }
-
-        helpItems.append(STAboutItem(
-            title: I18N.menu_contact,
-            iconName: "envelope",
-            action: { [weak self] in
-                self?.handleContact()
-            }
-        ))
-
-        if !helpItems.isEmpty {
-            sections.append(helpItems)
-            titles.append(I18N.section_help)
-        }
+            )
+        ])
+        titles.append(I18N.section_help)
 
         // Share 섹션
         var shareItems: [STAboutItem] = []

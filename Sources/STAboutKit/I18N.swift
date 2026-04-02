@@ -19,7 +19,6 @@ struct I18N {
 
     // MARK: - Menu Items
 
-    static let menu_faq = "stabout_menu_faq".localized
     static let menu_contact = "stabout_menu_contact".localized
     static let menu_share = "stabout_menu_share".localized
     static let menu_review = "stabout_menu_review".localized
