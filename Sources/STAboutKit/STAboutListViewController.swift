@@ -76,16 +76,29 @@ open class STAboutListViewController: UIViewController {
         var sections: [[STAboutItem]] = []
         var titles: [String?] = []
 
-        // Help 섹션 (문의하기)
-        sections.append([
-            STAboutItem(
-                title: I18N.menu_contact,
-                iconName: "envelope",
+        // Help 섹션
+        var helpItems: [STAboutItem] = []
+
+        if self.configuration.faqURL != nil {
+            helpItems.append(STAboutItem(
+                title: I18N.menu_faq,
+                iconName: "questionmark.circle",
                 action: { [weak self] in
-                    self?.handleContact()
+                    guard let self = self else { return }
+                    self.openURL(self.configuration.faqURL ?? "", title: I18N.menu_faq)
                 }
-            )
-        ])
+            ))
+        }
+
+        helpItems.append(STAboutItem(
+            title: I18N.menu_contact,
+            iconName: "envelope",
+            action: { [weak self] in
+                self?.handleContact()
+            }
+        ))
+
+        sections.append(helpItems)
         titles.append(I18N.section_help)
 
         // Share 섹션
@@ -119,6 +132,14 @@ open class STAboutListViewController: UIViewController {
 
         // Info 섹션
         var infoItems: [STAboutItem] = []
+
+        infoItems.append(STAboutItem(
+            title: I18N.menu_open_source,
+            iconName: "chevron.left.forwardslash.chevron.right",
+            action: { [weak self] in
+                self?.showOpenSourceList()
+            }
+        ))
 
         infoItems.append(STAboutItem(
             title: I18N.menu_privacy,
@@ -215,6 +236,11 @@ open class STAboutListViewController: UIViewController {
     private func handleWriteReview() {
         guard let url = URL(string: self.configuration.reviewURL) else { return }
         UIApplication.shared.open(url)
+    }
+
+    private func showOpenSourceList() {
+        let openSourceVC = STOpenSourceListViewController()
+        self.navigationController?.pushViewController(openSourceVC, animated: true)
     }
 
     private func openURL(_ urlString: String, title: String = "") {

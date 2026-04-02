@@ -17,6 +17,7 @@ public struct STAboutConfiguration {
     // MARK: - URLs
 
     public let appStoreWebURL: String
+    public let faqURL: String?
 
     // MARK: - Contact
 
@@ -96,6 +97,7 @@ public struct STAboutConfiguration {
         appVersion: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "",
         buildNumber: String = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "",
         appStoreWebURL: String,
+        faqURL: String? = nil,
         kakaoOpenChatURL: String? = nil,
         shareMessage: String,
         sceneTitle: String? = nil,
@@ -106,6 +108,7 @@ public struct STAboutConfiguration {
         self.appVersion = appVersion
         self.buildNumber = buildNumber
         self.appStoreWebURL = appStoreWebURL
+        self.faqURL = faqURL
         self.kakaoOpenChatURL = kakaoOpenChatURL
         self.shareMessage = shareMessage
         self.sceneTitle = sceneTitle ?? I18N.scene_title

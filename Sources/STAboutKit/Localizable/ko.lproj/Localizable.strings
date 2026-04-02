@@ -9,11 +9,13 @@
 
 // MARK: - Menu Items
 "stabout_menu_faq" = "자주 묻는 질문";
+"stabout_menu_faq" = "자주 묻는 질문";
 "stabout_menu_contact" = "문의하기";
 "stabout_menu_share" = "앱 공유하기";
 "stabout_menu_review" = "리뷰 작성하기";
 "stabout_menu_privacy" = "개인정보 처리방침";
 "stabout_menu_terms" = "이용약관";
+"stabout_menu_open_source" = "오픈소스 라이센스";
 "stabout_menu_version" = "앱 버전";
 
 // MARK: - Contact Action Sheet

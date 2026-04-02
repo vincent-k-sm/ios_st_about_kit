@@ -20,11 +20,13 @@ struct I18N {
 
     // MARK: - Menu Items
 
+    static let menu_faq = "stabout_menu_faq".localized
     static let menu_contact = "stabout_menu_contact".localized
     static let menu_share = "stabout_menu_share".localized
     static let menu_review = "stabout_menu_review".localized
     static let menu_privacy = "stabout_menu_privacy".localized
     static let menu_terms = "stabout_menu_terms".localized
+    static let menu_open_source = "stabout_menu_open_source".localized
     static let menu_version = "stabout_menu_version".localized
 
     // MARK: - Contact Action Sheet

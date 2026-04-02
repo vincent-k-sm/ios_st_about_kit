@@ -9,11 +9,13 @@
 
 // MARK: - Menu Items
 "stabout_menu_faq" = "FAQ";
+"stabout_menu_faq" = "FAQ";
 "stabout_menu_contact" = "Contact Us";
 "stabout_menu_share" = "Share App";
 "stabout_menu_review" = "Write a Review";
 "stabout_menu_privacy" = "Privacy Policy";
 "stabout_menu_terms" = "Terms of Service";
+"stabout_menu_open_source" = "Open Source Licenses";
 "stabout_menu_version" = "App Version";
 
 // MARK: - Contact Action Sheet

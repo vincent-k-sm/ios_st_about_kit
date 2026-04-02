@@ -7,7 +7,7 @@ import SnapKit
 import UIKit
 import WebKit
 
-final class STAboutWebViewController: UIViewController {
+public final class STAboutWebViewController: UIViewController {
     deinit { }
 
     // MARK: - UI Components
@@ -31,7 +31,7 @@ final class STAboutWebViewController: UIViewController {
 
     // MARK: - Initialization
 
-    init(title: String, urlString: String) {
+    public init(title: String, urlString: String) {
         self.pageTitle = title
         self.urlString = urlString
         super.init(nibName: nil, bundle: nil)
@@ -44,7 +44,7 @@ final class STAboutWebViewController: UIViewController {
 
     // MARK: - Lifecycle
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         self.setupUI()
         self.loadPage()
@@ -81,11 +81,11 @@ final class STAboutWebViewController: UIViewController {
 
 extension STAboutWebViewController: WKNavigationDelegate {
 
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.activityIndicator.stopAnimating()
     }
 
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         self.activityIndicator.stopAnimating()
     }
 }
