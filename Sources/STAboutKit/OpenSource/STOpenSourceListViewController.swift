@@ -8,13 +8,13 @@ import UIKit
 
 // MARK: - License Model
 
-public struct STLicenseItem {
+public struct STLicenseItem: Codable {
     public let name: String
-    public let licenseText: String
+    public let license: String
 
-    public init(name: String, licenseText: String) {
+    public init(name: String, license: String) {
         self.name = name
-        self.licenseText = licenseText
+        self.license = license
     }
 }
 
@@ -33,6 +33,17 @@ final class STOpenSourceListViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "LicenseCell")
         tableView.rowHeight = 52
         return tableView
+    }()
+
+    private lazy var emptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Licenses.json not found.\nAdd generate-licenses.sh to Build Phase."
+        label.font = STAboutTypography.caption1
+        label.textColor = STAboutColors.textTertiary
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.isHidden = true
+        return label
     }()
 
     // MARK: - Data
@@ -54,61 +65,32 @@ final class STOpenSourceListViewController: UIViewController {
         self.navigationItem.title = I18N.menu_open_source
 
         self.view.addSubview(self.tableView)
+        self.view.addSubview(self.emptyLabel)
+
         self.tableView.snp.makeConstraints { make in
             make.edges.equalTo(self.view.safeAreaLayoutGuide)
+        }
+
+        self.emptyLabel.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(40)
         }
     }
 
     // MARK: - License Loading
 
     private func loadLicenses() {
-        // Bundle.allFrameworks에서 SPM 패키지 이름 추출
-        var items: [STLicenseItem] = []
-        let excludePrefixes = ["com.apple.", "libswift", "UIKit", "Foundation", "CoreFoundation"]
-
-        for bundle in Bundle.allFrameworks {
-            guard let bundleId = bundle.bundleIdentifier else { continue }
-
-            // 시스템 프레임워크 제외
-            let isSystem = excludePrefixes.contains(where: { bundleId.hasPrefix($0) })
-            if isSystem { continue }
-
-            // 번들 경로에서 패키지명 추출
-            let path = bundle.bundlePath
-            let name = (path as NSString).lastPathComponent
-                .replacingOccurrences(of: ".framework", with: "")
-                .replacingOccurrences(of: ".bundle", with: "")
-
-            // LICENSE 파일 검색
-            let licenseText = Self.findLicenseInBundle(bundle) ?? "This package is used under its original license terms."
-
-            if !name.isEmpty {
-                items.append(STLicenseItem(name: name, licenseText: licenseText))
-            }
+        guard let url = Bundle.main.url(forResource: "Licenses", withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let items = try? JSONDecoder().decode([STLicenseItem].self, from: data)
+        else {
+            self.emptyLabel.isHidden = false
+            self.tableView.isHidden = true
+            return
         }
 
-        // 중복 제거 + 정렬
-        var seen = Set<String>()
-        self.licenses = items
-            .filter { seen.insert($0.name).inserted }
-            .sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
+        self.licenses = items.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
         self.tableView.reloadData()
-    }
-
-    private static func findLicenseInBundle(_ bundle: Bundle) -> String? {
-        let candidates = ["LICENSE", "LICENSE.md", "LICENSE.txt", "LICENCE", "License"]
-        for candidate in candidates {
-            if let url = bundle.url(forResource: candidate, withExtension: nil) {
-                return try? String(contentsOf: url, encoding: .utf8)
-            }
-            // 확장자 분리
-            let name = (candidate as NSString).deletingPathExtension
-            let ext = (candidate as NSString).pathExtension
-            if !ext.isEmpty, let url = bundle.url(forResource: name, withExtension: ext) {
-                return try? String(contentsOf: url, encoding: .utf8)
-            }
-        }
-        return nil
     }
 }
 
@@ -180,6 +162,6 @@ private final class STOpenSourceDetailViewController: UIViewController {
         self.textView.snp.makeConstraints { make in
             make.edges.equalTo(self.view.safeAreaLayoutGuide)
         }
-        self.textView.text = self.license.licenseText
+        self.textView.text = self.license.license
     }
 }
