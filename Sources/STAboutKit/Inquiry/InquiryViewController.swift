@@ -382,7 +382,7 @@ public final class InquiryViewController: UIViewController {
 //        }
 
         self.attachmentStackView.snp.makeConstraints { make in
-            make.top.equalTo(self.attachmentLabel.snp.bottom).offset(STAboutSpacing.sm)
+            make.top.equalTo(self.messageTextView.snp.bottom).offset(STAboutSpacing.sm)
             make.leading.trailing.equalToSuperview().inset(STAboutSpacing.lg)
         }
 
