@@ -51,10 +51,9 @@ public final class InquiryViewController: UIViewController {
         textField.keyboardType = .emailAddress
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
+        textField.clearButtonMode = .whileEditing
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 0))
         textField.leftViewMode = .always
-        textField.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 0))
-        textField.rightViewMode = .always
         textField.delegate = self
         textField.addTarget(self, action: #selector(self.emailTextFieldDidChange(_:)), for: .editingChanged)
         return textField
@@ -78,10 +77,9 @@ public final class InquiryViewController: UIViewController {
         textField.textColor = STAboutColors.textPrimary
         textField.backgroundColor = STAboutColors.inputBackground
         textField.layer.cornerRadius = 8
+        textField.clearButtonMode = .whileEditing
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 0))
         textField.leftViewMode = .always
-        textField.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 0))
-        textField.rightViewMode = .always
         textField.delegate = self
         return textField
     }()

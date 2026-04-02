@@ -36,6 +36,14 @@ open class STAboutListViewController: UIViewController {
     public init(configuration: STAboutConfiguration) {
         self.configuration = configuration
         super.init(nibName: nil, bundle: nil)
+
+        if let inquiry = configuration.inquiryConfig {
+            InquiryConfig.apiURL = inquiry.apiURL
+            InquiryConfig.spreadsheetId = inquiry.spreadsheetId
+            InquiryConfig.slackWebhookUrl = inquiry.slackWebhookUrl
+            InquiryConfig.deviceIdProvider = inquiry.deviceIdProvider
+            InquiryConfig.environmentInfoProvider = inquiry.environmentInfoProvider
+        }
     }
 
     @available(*, unavailable)
