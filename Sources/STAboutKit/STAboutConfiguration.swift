@@ -16,8 +16,6 @@ public struct STAboutConfiguration {
 
     // MARK: - URLs
 
-    public let termsOfServiceURL: String
-    public let privacyPolicyURL: String
     public let appStoreWebURL: String
 
     // MARK: - Contact
@@ -44,6 +42,26 @@ public struct STAboutConfiguration {
 
     public var reviewURL: String {
         return "https://apps.apple.com/app/id\(self.appId)?action=write-review"
+    }
+
+    // MARK: - Legal URLs (언어권 자동 선택)
+
+    private static let legalBaseURL = "https://sourcingtree.github.io/legal"
+
+    private static var languageCode: String {
+        let preferred = Locale.preferredLanguages.first ?? "en"
+        if preferred.hasPrefix("ko") {
+            return "ko"
+        }
+        return "en"
+    }
+
+    public var termsOfServiceURL: String {
+        return "\(Self.legalBaseURL)/\(Self.languageCode)/terms.html"
+    }
+
+    public var privacyPolicyURL: String {
+        return "\(Self.legalBaseURL)/\(Self.languageCode)/privacy.html"
     }
 
     // MARK: - Inquiry Configuration
@@ -77,8 +95,6 @@ public struct STAboutConfiguration {
         appId: String,
         appVersion: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "",
         buildNumber: String = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "",
-        termsOfServiceURL: String,
-        privacyPolicyURL: String,
         appStoreWebURL: String,
         kakaoOpenChatURL: String? = nil,
         shareMessage: String,
@@ -89,8 +105,6 @@ public struct STAboutConfiguration {
         self.appId = appId
         self.appVersion = appVersion
         self.buildNumber = buildNumber
-        self.termsOfServiceURL = termsOfServiceURL
-        self.privacyPolicyURL = privacyPolicyURL
         self.appStoreWebURL = appStoreWebURL
         self.kakaoOpenChatURL = kakaoOpenChatURL
         self.shareMessage = shareMessage
