@@ -169,7 +169,9 @@ open class STAboutListViewController: UIViewController {
     /// 문의하기 커스텀 처리. 기본: 카카오톡 옵션이 있으면 ActionSheet, 없으면 이메일.
     /// 완전히 커스텀하려면 오버라이드.
     open func handleContactAction() {
-        // 기본 구현 없음 - 프로젝트에서 1:1 문의 화면 등으로 오버라이드
+        guard self.configuration.inquiryConfig != nil else { return }
+        let listVC = InquiryListViewController()
+        self.navigationController?.pushViewController(listVC, animated: true)
     }
 
     // MARK: - Private Methods
