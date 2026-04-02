@@ -1,0 +1,21 @@
+// MARK: - Common
+"stabout_common_cancel" = "취소";
+
+// MARK: - Sections
+"stabout_section_help" = "도움말";
+"stabout_section_share" = "공유";
+"stabout_section_info" = "정보";
+
+// MARK: - Menu Items
+"stabout_menu_faq" = "자주 묻는 질문";
+"stabout_menu_contact" = "문의하기";
+"stabout_menu_share" = "앱 공유하기";
+"stabout_menu_review" = "리뷰 작성하기";
+"stabout_menu_privacy" = "개인정보 처리방침";
+"stabout_menu_terms" = "이용약관";
+"stabout_menu_version" = "앱 버전";
+
+// MARK: - Contact Action Sheet
+"stabout_contact_action_title" = "문의 방법 선택";
+"stabout_contact_inquiry" = "1:1 문의";
+"stabout_contact_kakao" = "카카오톡 오픈채팅";

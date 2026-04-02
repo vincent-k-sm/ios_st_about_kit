@@ -1,0 +1,21 @@
+// MARK: - Common
+"stabout_common_cancel" = "Cancel";
+
+// MARK: - Sections
+"stabout_section_help" = "Help";
+"stabout_section_share" = "Share";
+"stabout_section_info" = "Info";
+
+// MARK: - Menu Items
+"stabout_menu_faq" = "FAQ";
+"stabout_menu_contact" = "Contact Us";
+"stabout_menu_share" = "Share App";
+"stabout_menu_review" = "Write a Review";
+"stabout_menu_privacy" = "Privacy Policy";
+"stabout_menu_terms" = "Terms of Service";
+"stabout_menu_version" = "App Version";
+
+// MARK: - Contact Action Sheet
+"stabout_contact_action_title" = "Contact Method";
+"stabout_contact_inquiry" = "Direct Inquiry";
+"stabout_contact_kakao" = "KakaoTalk Open Chat";
