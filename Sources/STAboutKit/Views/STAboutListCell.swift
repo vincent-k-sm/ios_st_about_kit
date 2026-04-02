@@ -32,19 +32,30 @@ final class STAboutListCell: UITableViewCell {
         return label
     }()
 
-    private lazy var arrowImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "chevron.right")
-        imageView.tintColor = STAboutColors.textTertiary
-        imageView.contentMode = .scaleAspectFit
-        return imageView
+    private lazy var trailingStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = STAboutSpacing.sm
+        stackView.alignment = .center
+        stackView.addArrangedSubview(self.statusLabel)
+        stackView.addArrangedSubview(self.arrowImageView)
+        return stackView
     }()
 
     private lazy var statusLabel: UILabel = {
         let label = UILabel()
         label.font = STAboutTypography.caption1
         label.textColor = STAboutColors.textTertiary
+        label.isHidden = true
         return label
+    }()
+
+    private lazy var arrowImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "chevron.right")
+        imageView.tintColor = STAboutColors.textTertiary
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
 
     // MARK: - Initialization
@@ -81,8 +92,7 @@ final class STAboutListCell: UITableViewCell {
         self.contentView.addSubview(self.iconContainerView)
         self.iconContainerView.addSubview(self.iconImageView)
         self.contentView.addSubview(self.titleLabel)
-        self.contentView.addSubview(self.arrowImageView)
-        self.contentView.addSubview(self.statusLabel)
+        self.contentView.addSubview(self.trailingStackView)
 
         self.iconContainerView.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(STAboutSpacing.lg)
@@ -98,18 +108,15 @@ final class STAboutListCell: UITableViewCell {
         self.titleLabel.snp.makeConstraints { make in
             make.leading.equalTo(self.iconContainerView.snp.trailing).offset(STAboutSpacing.md)
             make.centerY.equalToSuperview()
-            make.trailing.lessThanOrEqualTo(self.statusLabel.snp.leading).offset(-STAboutSpacing.sm)
+            make.trailing.lessThanOrEqualTo(self.trailingStackView.snp.leading).offset(-STAboutSpacing.sm)
         }
 
-        self.statusLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(self.arrowImageView.snp.leading).offset(-STAboutSpacing.sm)
-            make.centerY.equalToSuperview()
-        }
-        self.statusLabel.isHidden = true
-
-        self.arrowImageView.snp.makeConstraints { make in
+        self.trailingStackView.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(STAboutSpacing.lg)
             make.centerY.equalToSuperview()
+        }
+
+        self.arrowImageView.snp.makeConstraints { make in
             make.size.equalTo(14)
         }
     }
