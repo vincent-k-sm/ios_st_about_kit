@@ -306,7 +306,7 @@ open class STAboutListViewController: UIViewController {
 
     private func showAdminAlert() {
         let alert = UIAlertController(
-            title: "Admin",
+            title: " ",
             message: nil,
             preferredStyle: .alert
         )
@@ -317,7 +317,10 @@ open class STAboutListViewController: UIViewController {
         alert.addAction(UIAlertAction(title: I18N.common_confirm, style: .default, handler: { [weak self] _ in
             guard let self = self else { return }
             guard let code = alert.textFields?.first?.text else { return }
-            self.handleAdminCode(code)
+            self.dismiss(animated: true, completion: { [weak self] in
+                guard let self = self else { return }
+                self.handleAdminCode(code)
+            })
         }))
         self.present(alert, animated: true)
     }
