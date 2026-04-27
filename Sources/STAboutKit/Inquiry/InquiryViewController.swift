@@ -221,7 +221,15 @@ public final class InquiryViewController: UIViewController {
         "yahoo.com"
     ]
 
-    private var filteredDomains: [String] = []
+    private var filteredDomains: [String] = [] {
+        didSet {
+            // filteredDomains는 dropdown 데이터소스라 갱신 시 즉시 reloadData로 numberOfRows를 동기화해야
+            // 이전 layout pass의 cellForRowAt이 stale numberOfRows로 out-of-bounds를 일으키지 않음.
+            if self.isViewLoaded {
+                self.domainDropdownView.reloadData()
+            }
+        }
+    }
 
     // MARK: - Properties
 
@@ -648,6 +656,10 @@ public final class InquiryViewController: UIViewController {
     private func hideDomainDropdown() {
         self.domainDropdownContainer.isHidden = true
         self.domainDropdownHeightConstraint?.update(offset: 0)
+        // dropdown을 닫을 때 데이터도 비워서 다음 layout pass에서 cellForRowAt이 호출되지 않게 함.
+        if !self.filteredDomains.isEmpty {
+            self.filteredDomains = []
+        }
     }
 
     private func selectDomain(_ domain: String) {
