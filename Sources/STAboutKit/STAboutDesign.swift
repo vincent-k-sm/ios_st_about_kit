@@ -5,6 +5,15 @@
 
 import UIKit
 
+// MARK: - Theme (앱별 brand 컬러 오버라이드)
+
+public enum STAboutTheme {
+    /// nil 이면 기본 블루(#1F6FFF). 앱 시작 시 설정 권장.
+    public static var primary: UIColor?
+    /// nil 이면 기본 빨강(#F04452).
+    public static var danger: UIColor?
+}
+
 // MARK: - Colors
 
 enum STAboutColors {
@@ -39,8 +48,12 @@ enum STAboutColors {
             : UIColor(stHex: "#6B7280")
     }
 
-    static let primary = UIColor(stHex: "#1F6FFF")
-    static let danger = UIColor(stHex: "#F04452")
+    static var primary: UIColor {
+        STAboutTheme.primary ?? UIColor(stHex: "#1F6FFF")
+    }
+    static var danger: UIColor {
+        STAboutTheme.danger ?? UIColor(stHex: "#F04452")
+    }
 
     static let chipBackground = UIColor { traits in
         traits.userInterfaceStyle == .dark
